@@ -3,6 +3,7 @@
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import {
 	Dialog,
 	DialogContent,
@@ -21,7 +22,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
+import { FileUpload } from '@/components/file-upload';
 
 const FormSchema = z.object({
 	name: z.string().min(1, {
@@ -36,9 +37,8 @@ export const InitialModal = () => {
 	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
-		setIsMounted(true)
-	}, [])
-	
+		setIsMounted(true);
+	}, []);
 
 	const form = useForm({
 		resolver: zodResolver(FormSchema),
@@ -55,7 +55,7 @@ export const InitialModal = () => {
 	};
 
 	if (!isMounted) {
-		return null
+		return null;
 	}
 
 	return (
@@ -74,7 +74,22 @@ export const InitialModal = () => {
 					<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
 						<div className='space-y-8 px-6'>
 							<div className='flex items-center justify-center text-center'>
-								TODO: Image Upload
+								<FormField
+									control={form.control}
+									name='imageUrl'
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<FileUpload 
+													endpoint="serverImage"
+													value={field.value}
+													onChange={field.onChange}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 							</div>
 							<FormField
 								control={form.control}
@@ -98,7 +113,7 @@ export const InitialModal = () => {
 							/>
 						</div>
 						<DialogFooter className='bg-gray-100 px-6 py-4'>
-							<Button variant="primary" disabled={isLoading}>
+							<Button variant='primary' disabled={isLoading}>
 								Create
 							</Button>
 						</DialogFooter>
