@@ -12,8 +12,7 @@ model Profile {
   id String @id @default(uuid())
   userId String @unique
   name String
-  imageUrl String
-  iamgeUrl String @db.Text
+  imageUrl String @db.Text
   email String @db.Text
 
   servers Server[]
@@ -34,7 +33,7 @@ model Server {
   profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
 
   members Member[]
-  channel Channel[]
+  channels Channel[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
