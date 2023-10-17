@@ -23,8 +23,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { FileUpload } from '@/components/file-upload';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-const FormSchema = z.object({
+const formSchema = z.object({
 	name: z.string().min(1, {
 		message: 'Server name is required',
 	}),
@@ -36,12 +38,14 @@ const FormSchema = z.object({
 export const InitialModal = () => {
 	const [isMounted, setIsMounted] = useState(false);
 
+	const router = useRouter();
+
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
 
 	const form = useForm({
-		resolver: zodResolver(FormSchema),
+		resolver: zodResolver(formSchema),
 		defaultValues: {
 			name: '',
 			imageUrl: '',
@@ -50,8 +54,16 @@ export const InitialModal = () => {
 
 	const isLoading = form.formState.isSubmitting;
 
-	const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-		console.log(values);
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		try {
+			await axios.post('/api/servers', values);
+
+			form.reset();
+			router.refresh();
+			window.location.reload();
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	if (!isMounted) {
@@ -80,8 +92,8 @@ export const InitialModal = () => {
 									render={({ field }) => (
 										<FormItem>
 											<FormControl>
-												<FileUpload 
-													endpoint="serverImage"
+												<FileUpload
+													endpoint='serverImage'
 													value={field.value}
 													onChange={field.onChange}
 												/>

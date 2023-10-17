@@ -30,7 +30,7 @@ model Server {
   inviteCode String @db.Text
 
   profileId String
-  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   members Member[]
   channels Channel[]
@@ -42,7 +42,7 @@ model Server {
 }
 
 enum MemberRole {
-  ADIMIN
+  ADMIN
   MODERATOR
   GUEST
 }
@@ -52,10 +52,10 @@ model Member {
   role MemberRole @default(GUEST)
 
   profileId String
-  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
-  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,16 +76,14 @@ model Channel {
   type ChannelType @default(TEXT)
 
   profileId String
-  profile Profile @relation(fields: [profileId],references: [id],onDelete: Cascade)
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   serverId String
-  server Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  
   @@index([profileId])
   @@index([serverId])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
