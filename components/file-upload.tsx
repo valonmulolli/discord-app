@@ -16,10 +16,9 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
 		return (
 			<div className='relative h-20 w-20'>
 				<Image
+				 	fill
 					src={value}
 					alt='Upload'
-					layout='fill'
-					objectFit='cover'
 					className='rounded-full'
 				/>
 				<button
@@ -32,6 +31,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
 			</div>
 		);
 	}
+
 	return (
 		<UploadDropzone
 			endpoint={endpoint}
@@ -39,7 +39,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
 				onChange(res?.[0].url);
 			}}
 			onUploadError={(error: Error) => {
-				console.error(error);
+				console.log(error);
 			}}
 		/>
 	);

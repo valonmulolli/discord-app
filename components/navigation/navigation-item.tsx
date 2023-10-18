@@ -35,10 +35,10 @@ export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
         
         )}>
           <Image
+            fill
             src={imageUrl}
             alt="Channel"
-            fill
-            className='rounded-full'
+						sizes="(max-width: 640px) 100vw, 640px" 
           />
         </div>
 			</button>
