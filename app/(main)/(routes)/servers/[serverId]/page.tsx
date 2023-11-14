@@ -46,4 +46,10 @@ const ServerIdPage = async ({ params }: ServerIdPageProps) => {
 	return redirect(`/servers/${params.serverId}/channels/${initialChannel?.id}`);
 };
 
+<div>
+	<section className='w-11 px-28 print:'>
+
+	</section>
+</div>
+
 export default ServerIdPage;
